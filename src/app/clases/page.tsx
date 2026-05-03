@@ -41,6 +41,7 @@ export default function ClasesPage() {
       price: pack.precio,
       type: 'pack',
       category: pack.categoria,
+        quantity: 1,
     }, 1);
     setAddedPack(pack);
   };

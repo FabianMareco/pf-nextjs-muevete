@@ -22,7 +22,7 @@ export default function AddToCartButton({ product, sizes = [] }: any) {
           onChange={(e) => setSelectedSize(e.target.value)}
           className="input-glass mb-4"
         >
-          {sizes.map(s => <option key={s}>{s}</option>)}
+          {sizes.map((s: string) => <option key={s}>{s}</option>)}
         </select>
       )}
       <button onClick={handleAdd} className="btn-accent w-full">

@@ -6,9 +6,9 @@ import { User } from 'firebase/auth';
 type AuthContextType = {
   user: User | null;
   loading: boolean;
-  signInWithGoogle: () => Promise<void>;
-  signInWithEmail: (email: string, password: string) => Promise<void>;
-  registerWithEmail: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<any>;
+  signInWithEmail: (email: string, password: string) => Promise<any>;
+  registerWithEmail: (email: string, password: string) => Promise<any>;
   logout: () => Promise<void>;
 };
 

@@ -1,20 +1,24 @@
-import { getProducts } from '@/lib/firestore';
-import ProductList from '@/components/ProductList';
+import { getProducts } from '@/lib/firestore-server';
 import { notFound } from 'next/navigation';
+import ProductCard from '@/components/ProductCard';
 
-export async function generateStaticParams() {
-  const categories = ['tazas', 'remeras', 'bolsos', 'hidratarse', 'zapatillas', 'elemento'];
-  return categories.map(categoryId => ({ categoryId }));
+interface Props {
+  params: Promise<{ categoryId: string }>;
 }
 
-export default async function CategoryPage({ params }) {
-  const { categoryId } = params;
+export default async function CategoryPage({ params }: Props) {
+  const { categoryId } = await params;
   const products = await getProducts(categoryId);
   if (!products.length) notFound();
+
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold capitalize mb-4">{categoryId}</h2>
-      <ProductList products={products} />
-    </main>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-secondary-light mb-6 capitalize">{categoryId}</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {products.map((p: any) => (
+          <ProductCard key={p.id} {...p} />
+        ))}
+      </div>
+    </div>
   );
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useCart } from '@/hooks/useCart';
 import ConfirmDialog from '@/components/ConfirmDialog';
  
-export default function ProductModal({ product, onClose }) {
+export default function ProductModal({ product, onClose }: { product: any; onClose: () => void }) {
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
@@ -20,7 +20,7 @@ export default function ProductModal({ product, onClose }) {
     : [];
  
   const currentImage = product.colors && product.colors.length > 0
-    ? (product.colors.find(c => c.name === selectedColor)?.pictureUrl ?? product.pictureUrl)
+    ? (product.colors.find((c: any) => c.name === selectedColor)?.pictureUrl ?? product.pictureUrl)
     : product.pictureUrl;
  
   const increment = () => setQuantity(prev => prev + 1);
@@ -87,7 +87,7 @@ export default function ProductModal({ product, onClose }) {
               <div className="mb-4">
                 <label className="block font-bold mb-2">Color:</label>
                 <div className="flex flex-wrap gap-2">
-                  {product.colors.map(color => (
+                  {product.colors.map((color: any) => (
                     <button
                       key={color.name}
                       onClick={() => setSelectedColor(color.name)}
