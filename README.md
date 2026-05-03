@@ -7,6 +7,10 @@ Aplicación web completa de e-commerce desarrollada con Next.js 15, orientada a 
 La aplicación está desplegada en Vercel y se actualiza automáticamente con cada push a la rama `main`.
  
 **URL de producción:** https://pf-nextjs-muevete.vercel.app
+
+## Demo en video
+
+[Ver demo del proyecto](https://drive.google.com/file/d/1iVjDiAue92DgLlA-_dwI10CMTyZdxBNi/view?usp=sharing)
  
 ## Tecnologías
  
