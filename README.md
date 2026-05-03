@@ -164,3 +164,15 @@ git push
  
 Vercel detecta el push automáticamente y redeploya. Las variables de entorno están configuradas directamente en el panel de Vercel.
  
+## Credenciales de prueba
+
+Para acceder al panel de administración (`/admin`):
+
+| Rol | Email | Contraseña |
+
+|---|---|---|
+
+| Administrador | admin@muevete.com | admin123 |
+
+> Cualquier usuario registrado puede navegar el sitio y realizar compras, pero solo el administrador tiene acceso a `/admin`.
+
