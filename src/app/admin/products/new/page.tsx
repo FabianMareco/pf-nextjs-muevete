@@ -73,7 +73,7 @@ export default function NewProductPage() {
               <option value="bolsos">👜 Bolsos</option>
               <option value="hidratarse">💧 Hidratación</option>
               <option value="zapatillas">👟 Zapatillas</option>
-              <option value="elemento">🧘 Elementos Yoga</option>
+              <option value="equipamiento">🏋️ Equipamiento</option>
             </select>
           </div>
         </div>
