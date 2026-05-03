@@ -15,9 +15,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       if (!user) {
         console.log('Sin usuario, redirigiendo a /login');
         router.push('/login');
-      } else {
+      } else if (user.email === "admin@muevete.com") {
         console.log('Usuario verificado:', user.email);
         setChecked(true);
+      } else {
+        router.push("/");
       }
     }
   }, [user, loading, router]);
