@@ -1,0 +1,13 @@
+[
+  {"id":1,"nombre":"Clase suelta","precio":9999,"categoria":"clases","descripcion":"Acceso a una clase a elección"},
+  {"id":2,"nombre":"Pack 4 clases","precio":30000,"categoria":"clases","descripcion":"4 clases para usar cuando quieras, ahorrá 25%"},
+  {"id":3,"nombre":"Pack 8 clases","precio":50000,"categoria":"clases","descripcion":"8 clases con 38% de descuento"},
+  {"id":4,"nombre":"Pase Ilimitado Mensual","precio":70000,"categoria":"clases","descripcion":"Acceso ilimitado por 30 días"},
+  {"id":11,"nombre":"Pase Anual","precio":650000,"categoria":"clases","descripcion":"12 meses (2 meses gratis)"},
+  {"id":5,"nombre":"Curso de Nutrición Deportiva","precio":20000,"categoria":"nutricion","descripcion":"Fundamentos de alimentación deportiva"},
+  {"id":6,"nombre":"Curso de Alimentación Saludable","precio":20000,"categoria":"nutricion","descripcion":"Mejora tu dieta diaria"},
+  {"id":7,"nombre":"Curso de Suplementación Deportiva","precio":20000,"categoria":"nutricion","descripcion":"Cuándo y cómo usar suplementos"},
+  {"id":8,"nombre":"Pack 3 Cursos de Nutrición","precio":50000,"categoria":"nutricion","descripcion":"Ahorro del 17%"},
+  {"id":9,"nombre":"Asesoría Nutricional Personalizada","precio":50000,"categoria":"nutricion","descripcion":"Consulta virtual + plan mensual"},
+  {"id":10,"nombre":"Pack Cursos + Asesoría","precio":75000,"categoria":"nutricion","descripcion":"Ahorro del 25%"}
+]
