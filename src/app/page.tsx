@@ -35,7 +35,7 @@ export default function HomePage() {
             ¿Estás listo para descubrir todo lo que el movimiento puede hacer por ti? ¡Únete hoy y transforma tu vida, un paso a la vez!
           </p></div>
       </div>
-      <div className="text-center my-8"><h4 className="text-xl font-bold bg-primary-dark/80 inline-block px-6 py-3 rounded-full text-secondary-light">Aprender nunca fue tan fácil como ahora en ¡MUEVETE!</h4><h4 className="mt-4 text-secondary-light">Hay una clase preparada para que puedas empezar a aprender <Link href="/ingreso" className="text-accent hover:underline">¡YA!</Link></h4></div>
+      <div className="text-center my-8"><h4 className="text-xl font-bold bg-primary-dark/80 inline-block px-6 py-3 rounded-full text-secondary-light">Aprender nunca fue tan fácil como ahora en ¡MUEVETE!</h4><h4 className="mt-4 text-secondary-light">Hay una clase preparada para que puedas empezar a aprender <Link href="/login" className="text-accent hover:underline">¡YA!</Link></h4></div>
     </>
   );
 }
