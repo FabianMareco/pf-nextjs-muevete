@@ -2,100 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'PermanentMarker-Regular';
-  src: url('/fonts/PermanentMarker-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'FasterOne-Regular';
-  src: url('/fonts/FasterOne-Regular.ttf') format('truetype');
-}
-
 @layer base {
   body {
-    background: linear-gradient(135deg, #001219 0%, #005F73 100%);
+    background: #F7F5F2;
     min-height: 100vh;
   }
-  
+
   h1, h2, h3, h4 {
-    font-family: 'PermanentMarker-Regular', cursive;
+    font-family: var(--font-display), sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: #14110F;
   }
-  
+
   h2 {
-    @apply text-center text-3xl md:text-4xl font-bold text-secondary-light mb-6;
-    text-shadow: 4px 4px 0px rgba(238, 155, 0, 0.4), 8px 8px 0px rgba(187, 62, 3, 0.25);
+    @apply text-3xl md:text-4xl mb-6;
   }
-  
+
   h3 {
-    @apply text-center text-2xl md:text-3xl font-bold text-secondary-light mb-5;
-    text-shadow: 4px 4px 0px rgba(238, 155, 0, 0.4), 8px 8px 0px rgba(187, 62, 3, 0.25);
+    @apply text-2xl md:text-3xl mb-5;
   }
-  
+
   h4 {
-    @apply text-center text-xl md:text-2xl font-bold text-secondary-light mb-4;
-    text-shadow: 3px 3px 0px rgba(238, 155, 0, 0.3), 6px 6px 0px rgba(187, 62, 3, 0.15);
+    @apply text-xl md:text-2xl mb-4;
+  }
+
+  ::selection {
+    background: #FF4433;
+    color: #F7F5F2;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #FF4433;
+    outline-offset: 2px;
   }
 }
 
 @layer components {
-  .home-title {
-    font-family: 'FasterOne-Regular', cursive;
-  }
-  
   .logo-container {
-    @apply flex items-center justify-center gap-4;
+    @apply flex items-center gap-2;
   }
-  
+
   .logo-image {
-    @apply w-auto h-16 md:h-20;
+    @apply w-auto h-9 md:h-10;
   }
-  
+
   .logo-text {
-    font-family: 'FasterOne-Regular', cursive;
-    @apply text-secondary-light;
-    font-size: clamp(60px, 15vw, 120px);
-    text-shadow: 6px 6px 0px rgba(238, 155, 0, 0.5), 12px 12px 0px rgba(187, 62, 3, 0.3), 18px 18px 0px rgba(187, 62, 3, 0.15);
+    font-family: var(--font-display), sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    @apply text-paper text-xl md:text-2xl;
     line-height: 1;
   }
-  
+
   .btn-primary {
-    @apply bg-primary hover:bg-primary-light text-white font-bold py-2 px-4 rounded-lg transition;
+    @apply bg-ink hover:bg-surface text-paper font-bold py-2.5 px-5 rounded-control transition-transform duration-150;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  
+
   .btn-accent {
-    @apply bg-accent hover:bg-accent-dark text-primary-dark font-bold py-2 px-4 rounded-lg transition;
+    @apply bg-accent hover:bg-accent-deep text-paper font-bold py-2.5 px-5 rounded-control transition-transform duration-150;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  
+
   .btn-danger {
-    @apply bg-danger hover:bg-danger-dark text-white font-bold py-2 px-4 rounded-lg transition;
+    @apply bg-danger hover:bg-danger-dark text-paper font-bold py-2.5 px-5 rounded-control transition-transform duration-150;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  
+
   .btn-outline {
-    @apply border-2 border-primary-light text-primary-light hover:bg-primary-light hover:text-primary-dark font-bold py-2 px-4 rounded-lg transition;
+    @apply border-2 border-ink text-ink hover:bg-ink hover:text-paper font-bold py-2.5 px-5 rounded-control transition;
   }
-  
-  .card-glass {
-    @apply bg-white/10 backdrop-blur-md rounded-xl shadow-lg border border-white/20;
+
+  .btn-primary:active,
+  .btn-accent:active,
+  .btn-danger:active,
+  .btn-outline:active {
+    @apply scale-[0.97];
   }
-  
-  .input-glass {
-    @apply w-full p-2 rounded bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-accent;
+
+  .card {
+    @apply bg-white rounded-card border border-neutral shadow-sm;
   }
-  
+
+  .card-dark {
+    @apply bg-surface text-paper rounded-card border border-white/10;
+  }
+
+  .input {
+    @apply w-full p-2.5 rounded-control bg-white border border-neutral text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent;
+  }
+
   .texto-contenido {
-    background-color: rgba(233, 216, 166, 0.7);
-    color: #001219;
-    @apply text-justify text-base md:text-lg p-6 rounded-xl mx-5 leading-relaxed;
+    @apply bg-neutral text-ink text-justify text-base md:text-lg p-6 rounded-card mx-5 leading-relaxed;
   }
-  
+
   .product-title {
-    @apply text-gray-800 font-bold text-center;
-    font-family: system-ui, -apple-system, sans-serif;
+    @apply text-ink font-bold text-center;
   }
-  
+
   .pack-title {
-    @apply text-secondary-light font-bold text-center;
-    font-family: system-ui, -apple-system, sans-serif;
+    @apply text-ink font-bold text-center;
   }
 }

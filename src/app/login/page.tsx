@@ -55,57 +55,57 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="card-glass w-full max-w-md p-8">
-        <h1 className="text-3xl font-bold text-center text-secondary-light mb-6">🔐 Iniciar Sesión</h1>
-        
+    <div className="min-h-screen flex items-center justify-center p-4 bg-neutral">
+      <div className="card w-full max-w-md p-8">
+        <h1 className="text-3xl font-bold text-center text-ink mb-6">Iniciar sesión</h1>
+
         <button
           onClick={handleGoogleSignIn}
-          className="w-full bg-accent hover:bg-accent-dark text-primary-dark font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition mb-6"
+          className="w-full btn-primary flex items-center justify-center gap-2 mb-6"
         >
           <i className="fab fa-google"></i> Continuar con Google
         </button>
 
         <div className="relative mb-6">
-          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/20"></div></div>
-          <div className="relative flex justify-center text-sm"><span className="px-2 bg-primary-dark/80 text-secondary-light">O con email</span></div>
+          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-neutral"></div></div>
+          <div className="relative flex justify-center text-sm"><span className="px-2 bg-white text-muted">O con email</span></div>
         </div>
 
         <form onSubmit={handleEmailSignIn}>
           <div className="mb-4">
-            <label className="block font-bold mb-1 text-secondary-light">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 rounded bg-white/10 border border-white/20 text-white" required />
+            <label className="block font-bold mb-1 text-ink">Email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input" required />
           </div>
           <div className="mb-4">
-            <label className="block font-bold mb-1 text-secondary-light">Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-2 rounded bg-white/10 border border-white/20 text-white" required />
+            <label className="block font-bold mb-1 text-ink">Contraseña</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input" required />
           </div>
-          <button type="submit" disabled={loading} className="w-full bg-primary-light hover:bg-primary text-white py-2 rounded-lg transition disabled:opacity-50">
+          <button type="submit" disabled={loading} className="w-full btn-accent disabled:opacity-50">
             {loading ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
 
-        <button onClick={() => setShowResetModal(true)} className="w-full mt-3 bg-danger hover:bg-danger-dark text-white py-2 rounded-lg transition">
-          🔑 Olvidé mi contraseña
+        <button onClick={() => setShowResetModal(true)} className="w-full mt-3 btn-outline">
+          Olvidé mi contraseña
         </button>
 
-        <p className="text-center mt-4 text-sm text-secondary-light">
-          ¿No tienes cuenta?{' '}
-          <Link href="/register" className="text-accent hover:underline">
-            Regístrate aquí
+        <p className="text-center mt-4 text-sm text-muted">
+          ¿No tenés cuenta?{' '}
+          <Link href="/register" className="text-accent-deep font-semibold hover:underline">
+            Registrate acá
           </Link>
         </p>
       </div>
 
       {/* Modal recuperar */}
       {showResetModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="card-glass w-full max-w-md p-6">
-            <h2 className="text-xl font-bold text-secondary-light mb-4">Recuperar contraseña</h2>
-            <input type="email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} placeholder="tu@email.com" className="w-full p-2 rounded bg-white/10 border border-white/20 text-white mb-4" />
+        <div className="fixed inset-0 bg-ink/60 flex items-center justify-center z-50 p-4">
+          <div className="card w-full max-w-md p-6" style={{ transformOrigin: 'center' }}>
+            <h2 className="text-xl font-bold text-ink mb-4">Recuperar contraseña</h2>
+            <input type="email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} placeholder="tu@email.com" className="input mb-4" />
             <div className="flex gap-3">
-              <button onClick={handleResetPassword} className="flex-1 bg-accent text-primary-dark py-2 rounded hover:bg-accent-dark">Enviar email</button>
-              <button onClick={() => setShowResetModal(false)} className="flex-1 bg-gray-500 text-white py-2 rounded hover:bg-gray-600">Cancelar</button>
+              <button onClick={handleResetPassword} className="flex-1 btn-accent">Enviar email</button>
+              <button onClick={() => setShowResetModal(false)} className="flex-1 border-2 border-neutral text-muted font-bold py-2.5 rounded-control hover:bg-neutral transition active:scale-[0.97]">Cancelar</button>
             </div>
           </div>
         </div>

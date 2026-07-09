@@ -3,12 +3,12 @@ import { useState } from 'react';
 import ProductCard from '@/components/ProductCard';
  
 const icons: Record<string, string> = {
-  tazas: '☕',
-  remeras: '👕',
-  bolsos: '👜',
-  botellas: '💧',
-  zapatillas: '👟',
-  equipamiento: '🏋️',
+  tazas: 'fa-mug-hot',
+  remeras: 'fa-shirt',
+  bolsos: 'fa-bag-shopping',
+  botellas: 'fa-bottle-water',
+  zapatillas: 'fa-shoe-prints',
+  equipamiento: 'fa-dumbbell',
 };
  
 const names: Record<string, string> = {
@@ -72,36 +72,36 @@ export default function MerchandisingClient({ products }: { products: any[] }) {
  
       {/* Sidebar desktop */}
       <aside className="hidden lg:block w-52 flex-shrink-0">
-        <div className="card-glass p-4 sticky top-24">
-          <h3 className="text-secondary-light font-bold mb-4 text-sm uppercase tracking-wide">Categorías</h3>
+        <div className="card p-4 sticky top-24">
+          <h3 className="text-ink font-bold mb-4 text-sm uppercase tracking-wide text-left">Categorías</h3>
  
           {/* Todos */}
-          <label className="flex items-center gap-2 mb-3 cursor-pointer text-secondary-light text-sm hover:text-white transition">
+          <label className="flex items-center gap-2 mb-3 cursor-pointer text-ink text-sm hover:text-accent-deep transition">
             <input
               type="checkbox"
               checked={allSelected}
               onChange={toggleAll}
-              className="accent-red-500 w-4 h-4"
+              className="accent-accent w-4 h-4"
             />
             <span className="font-semibold">Todas</span>
           </label>
  
-          <div className="border-t border-white/10 mb-3" />
+          <div className="border-t border-neutral mb-3" />
  
           {subcategoryOrder.map(sub => (
-            <label key={sub} className="flex items-center gap-2 mb-2 cursor-pointer text-secondary-light text-sm hover:text-white transition">
+            <label key={sub} className="flex items-center gap-2 mb-2 cursor-pointer text-ink text-sm hover:text-accent-deep transition">
               <input
                 type="checkbox"
                 checked={activeFilters.includes(sub)}
                 onChange={() => toggleFilter(sub)}
-                className="accent-red-500 w-4 h-4"
+                className="accent-accent w-4 h-4"
               />
-              <span>{icons[sub]} {names[sub]}</span>
+              <span className="flex items-center gap-2"><i className={`fas ${icons[sub]} text-muted w-4`} aria-hidden="true" />{names[sub]}</span>
             </label>
           ))}
  
-          <div className="border-t border-white/10 mt-3 pt-3">
-            <p className="text-secondary-light/50 text-xs">
+          <div className="border-t border-neutral mt-3 pt-3">
+            <p className="text-muted text-xs">
               {sorted.filter(p => activeFilters.includes(p.subcategory)).length} productos
             </p>
           </div>
@@ -112,29 +112,29 @@ export default function MerchandisingClient({ products }: { products: any[] }) {
       <div className="lg:hidden">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="w-full card-glass p-3 text-secondary-light text-sm font-bold flex justify-between items-center"
+          className="w-full card p-3 text-ink text-sm font-bold flex justify-between items-center active:scale-[0.98] transition"
         >
-          <span>🔽 Filtrar por categoría</span>
-          <span className="text-xs text-secondary-light/60">{activeFilters.length} seleccionadas</span>
+          <span className="flex items-center gap-2"><i className="fas fa-filter" aria-hidden="true" />Filtrar por categoría</span>
+          <span className="text-xs text-muted">{activeFilters.length} seleccionadas</span>
         </button>
  
         {sidebarOpen && (
-          <div className="card-glass p-4 mt-2">
-            <label className="flex items-center gap-2 mb-3 cursor-pointer text-secondary-light text-sm">
-              <input type="checkbox" checked={allSelected} onChange={toggleAll} className="accent-red-500 w-4 h-4" />
+          <div className="card p-4 mt-2">
+            <label className="flex items-center gap-2 mb-3 cursor-pointer text-ink text-sm">
+              <input type="checkbox" checked={allSelected} onChange={toggleAll} className="accent-accent w-4 h-4" />
               <span className="font-semibold">Todas</span>
             </label>
-            <div className="border-t border-white/10 mb-3" />
+            <div className="border-t border-neutral mb-3" />
             <div className="grid grid-cols-2 gap-2">
               {subcategoryOrder.map(sub => (
-                <label key={sub} className="flex items-center gap-2 cursor-pointer text-secondary-light text-sm">
+                <label key={sub} className="flex items-center gap-2 cursor-pointer text-ink text-sm">
                   <input
                     type="checkbox"
                     checked={activeFilters.includes(sub)}
                     onChange={() => toggleFilter(sub)}
-                    className="accent-red-500 w-4 h-4"
+                    className="accent-accent w-4 h-4"
                   />
-                  <span>{icons[sub]} {names[sub]}</span>
+                  <span className="flex items-center gap-1.5"><i className={`fas ${icons[sub]} text-muted`} aria-hidden="true" />{names[sub]}</span>
                 </label>
               ))}
             </div>
@@ -145,13 +145,14 @@ export default function MerchandisingClient({ products }: { products: any[] }) {
       {/* Productos */}
       <div className="flex-1">
         {visibleSubs.length === 0 && (
-          <p className="text-center text-secondary-light py-12">No hay productos en las categorías seleccionadas.</p>
+          <p className="text-center text-muted py-12">No hay productos en las categorías seleccionadas.</p>
         )}
  
         {visibleSubs.map(sub => (
           <div key={sub} className="mb-12">
-            <h2 className="text-2xl font-bold text-center mb-6 pb-2 border-b-4 border-red-500 inline-block w-full">
-              {icons[sub]} {names[sub]}
+            <h2 className="text-2xl font-bold mb-6 pb-2 border-b-2 border-accent flex items-center gap-2.5">
+              <i className={`fas ${icons[sub]} text-accent text-xl`} aria-hidden="true" />
+              {names[sub]}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {grouped[sub].map((p) => (

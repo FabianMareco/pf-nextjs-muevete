@@ -18,21 +18,21 @@ export default function AdminDashboard() {
   }, []);
 
   if (loading) {
-    return <div className="text-center py-10 text-secondary-light">Cargando estadísticas...</div>;
+    return <div className="text-center py-10 text-muted">Cargando estadísticas...</div>;
   }
 
   return (
     <div>
-      <h2 className="text-secondary-light text-2xl mb-6">Dashboard</h2>
+      <h2 className="text-ink text-2xl mb-6 text-left">Dashboard</h2>
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="card-glass p-6 text-center">
-          <p className="text-5xl font-bold text-accent">{stats.products}</p>
-          <p className="text-secondary-light mt-2 text-lg">Productos</p>
+        <div className="card p-6 text-center">
+          <p className="text-5xl font-bold text-ink">{stats.products}</p>
+          <p className="text-muted mt-2 text-lg">Productos</p>
           <Link href="/admin/products" className="btn-primary inline-block mt-4">Gestionar productos</Link>
         </div>
-        <div className="card-glass p-6 text-center">
-          <p className="text-5xl font-bold text-accent">{stats.orders}</p>
-          <p className="text-secondary-light mt-2 text-lg">Órdenes</p>
+        <div className="card p-6 text-center">
+          <p className="text-5xl font-bold text-ink">{stats.orders}</p>
+          <p className="text-muted mt-2 text-lg">Órdenes</p>
           <Link href="/admin/orders" className="btn-primary inline-block mt-4">Ver órdenes</Link>
         </div>
       </div>

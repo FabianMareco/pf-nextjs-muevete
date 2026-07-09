@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import ImageUpload from '@/components/ImageUpload';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import toast from 'react-hot-toast';
 
 export default function EditProductPage() {
@@ -11,6 +12,7 @@ export default function EditProductPage() {
   
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [form, setForm] = useState({
     name: '',
     price: '',
@@ -75,7 +77,7 @@ export default function EditProductPage() {
   };
 
   const handleDelete = async () => {
-    if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+    setConfirmDelete(false);
     setLoading(true);
     try {
       const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
@@ -96,8 +98,8 @@ export default function EditProductPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando producto...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-4 border-accent border-t-transparent mx-auto"></div>
+          <p className="mt-4 text-muted">Cargando producto...</p>
         </div>
       </div>
     );
@@ -106,25 +108,25 @@ export default function EditProductPage() {
   return (
     <div className="container mx-auto p-4 max-w-2xl">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">✏️ Editar Producto</h1>
+        <h1 className="text-2xl font-bold text-ink">Editar producto</h1>
         <button
-          onClick={handleDelete}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
+          onClick={() => setConfirmDelete(true)}
+          className="btn-danger py-2 px-4"
           disabled={loading}
         >
-          🗑️ Eliminar
+          Eliminar
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white/90 backdrop-blur-sm p-6 rounded-xl shadow-lg">
+      <form onSubmit={handleSubmit} className="card p-6">
         {/* Nombre */}
         <div className="mb-4">
-          <label className="block font-bold mb-1">Nombre del producto *</label>
+          <label className="block font-bold mb-1 text-ink">Nombre del producto *</label>
           <input
             type="text"
             value={form.name}
             onChange={e => setForm({ ...form, name: e.target.value })}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="input"
             required
           />
         </div>
@@ -132,22 +134,22 @@ export default function EditProductPage() {
         {/* Precio y Stock */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block font-bold mb-1">Precio (ARS) *</label>
+            <label className="block font-bold mb-1 text-ink">Precio (ARS) *</label>
             <input
               type="number"
               value={form.price}
               onChange={e => setForm({ ...form, price: e.target.value })}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="input"
               required
             />
           </div>
           <div>
-            <label className="block font-bold mb-1">Stock *</label>
+            <label className="block font-bold mb-1 text-ink">Stock *</label>
             <input
               type="number"
               value={form.stock}
               onChange={e => setForm({ ...form, stock: e.target.value })}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="input"
               required
             />
           </div>
@@ -156,40 +158,40 @@ export default function EditProductPage() {
         {/* Categoría y Subcategoría */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block font-bold mb-1">Categoría</label>
+            <label className="block font-bold mb-1 text-ink">Categoría</label>
             <select
               value={form.category}
               onChange={e => setForm({ ...form, category: e.target.value })}
-              className="w-full p-2 border rounded"
+              className="input"
             >
-              <option value="merchandising">🛍️ Merchandising</option>
+              <option value="merchandising">Merchandising</option>
             </select>
           </div>
           <div>
-            <label className="block font-bold mb-1">Subcategoría *</label>
+            <label className="block font-bold mb-1 text-ink">Subcategoría *</label>
             <select
               value={form.subcategory}
               onChange={e => setForm({ ...form, subcategory: e.target.value })}
-              className="w-full p-2 border rounded"
+              className="input"
               required
             >
-              <option value="tazas">☕ Tazas</option>
-              <option value="remeras">👕 Remeras</option>
-              <option value="bolsos">👜 Bolsos</option>
-              <option value="hidratarse">💧 Hidratación</option>
-              <option value="zapatillas">👟 Zapatillas</option>
-              <option value="equipamiento">🏋️ Equipamiento</option>
+              <option value="tazas">Tazas</option>
+              <option value="remeras">Remeras</option>
+              <option value="bolsos">Bolsos</option>
+              <option value="hidratarse">Hidratación</option>
+              <option value="zapatillas">Zapatillas</option>
+              <option value="equipamiento">Equipamiento</option>
             </select>
           </div>
         </div>
 
         {/* Descripción */}
         <div className="mb-4">
-          <label className="block font-bold mb-1">Descripción *</label>
+          <label className="block font-bold mb-1 text-ink">Descripción *</label>
           <textarea
             value={form.description}
             onChange={e => setForm({ ...form, description: e.target.value })}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="input"
             rows={4}
             required
           />
@@ -197,15 +199,15 @@ export default function EditProductPage() {
 
         {/* Imagen */}
         <div className="mb-4">
-          <label className="block font-bold mb-1">Imagen del producto</label>
+          <label className="block font-bold mb-1 text-ink">Imagen del producto</label>
           <ImageUpload onImageUploaded={(url) => setForm({ ...form, pictureUrl: url })} />
           {form.pictureUrl && (
             <div className="mt-3">
-              <p className="text-sm text-gray-600 mb-1">Vista previa actual:</p>
+              <p className="text-sm text-muted mb-1">Vista previa actual:</p>
               <img
                 src={form.pictureUrl}
                 alt="preview"
-                className="w-32 h-32 object-contain border rounded p-1 bg-white"
+                className="w-32 h-32 object-contain border border-neutral rounded-control p-1 bg-white"
               />
             </div>
           )}
@@ -216,19 +218,30 @@ export default function EditProductPage() {
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded transition disabled:opacity-50"
+            className="flex-1 btn-primary disabled:opacity-50"
           >
-            {loading ? 'Guardando...' : '💾 Guardar cambios'}
+            {loading ? 'Guardando...' : 'Guardar cambios'}
           </button>
           <button
             type="button"
             onClick={() => router.push('/admin')}
-            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded transition"
+            className="flex-1 border-2 border-neutral text-muted font-bold py-2.5 rounded-control hover:bg-neutral transition active:scale-[0.97]"
           >
             Cancelar
           </button>
         </div>
       </form>
+
+      <ConfirmDialog
+        isOpen={confirmDelete}
+        title="¿Eliminar producto?"
+        message="Esta acción no se puede deshacer."
+        confirmLabel="Sí, eliminar"
+        cancelLabel="Cancelar"
+        variant="danger"
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmDelete(false)}
+      />
     </div>
   );
 }

@@ -93,7 +93,8 @@ export default function CartPage() {
   if (cart.length === 0 && !orderTicket) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold text-secondary-light mb-4">🛒 Carrito vacío</h1>
+        <i className="fas fa-cart-shopping text-4xl text-muted mb-4" aria-hidden="true" />
+        <h1 className="text-3xl font-bold text-ink mb-4">Carrito vacío</h1>
         <Link href="/merchandising" className="btn-primary inline-block">
           Ir a comprar
         </Link>
@@ -103,14 +104,14 @@ export default function CartPage() {
  
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center text-secondary-light mb-8">🛒 Carrito de compras</h1>
+      <h1 className="text-3xl font-bold text-left text-ink mb-8">Carrito de compras</h1>
  
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Tabla de productos */}
-        <div className="lg:w-2/3 card-glass p-4">
+        <div className="lg:w-2/3 card p-4">
           <div className="overflow-x-auto">
-            <table className="w-full text-secondary-light">
-              <thead className="border-b border-white/20">
+            <table className="w-full text-ink">
+              <thead className="border-b border-neutral">
                 <tr className="text-left">
                   <th className="p-2">Producto</th>
                   <th className="p-2 text-center">Tipo</th>
@@ -122,20 +123,20 @@ export default function CartPage() {
               </thead>
               <tbody>
                 {cart.map((item) => (
-                  <tr key={item.id} className="border-b border-white/10">
+                  <tr key={item.id} className="border-b border-neutral">
                     <td className="p-2">
                       {item.name}
                       {item.selectedSize && (
-                        <span className="text-sm text-secondary block">Talle: {item.selectedSize}</span>
+                        <span className="text-sm text-muted block">Talle: {item.selectedSize}</span>
                       )}
                     </td>
                     <td className="p-2 text-center">
                       {item.type === 'pack' ? (
-                        <span className="bg-accent/20 text-accent px-2 py-1 rounded text-xs">
-                          📦 {item.category === 'clases' ? 'Clase' : 'Asesoría'}
+                        <span className="bg-accent/15 text-accent-deep px-2 py-1 rounded-full text-xs font-semibold">
+                          {item.category === 'clases' ? 'Clase' : 'Asesoría'}
                         </span>
                       ) : (
-                        <span className="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs">🛍️ Merch</span>
+                        <span className="bg-ink/10 text-ink px-2 py-1 rounded-full text-xs font-semibold">Merch</span>
                       )}
                     </td>
                     <td className="p-2 text-center">{item.quantity}</td>
@@ -146,18 +147,19 @@ export default function CartPage() {
                     <td className="p-2 text-center">
                       <button
                         onClick={() => setItemToRemove({ id: item.id, name: item.name })}
-                        className="text-danger hover:text-danger-dark"
+                        aria-label="Eliminar producto"
+                        className="text-danger hover:text-danger-dark transition active:scale-90"
                       >
-                        🗑️
+                        <i className="fas fa-trash-can" aria-hidden="true" />
                       </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
-              <tfoot className="border-t border-white/20">
+              <tfoot className="border-t border-neutral">
                 <tr>
                   <td colSpan={4} className="p-2 text-right font-bold">Total:</td>
-                  <td className="p-2 text-right font-bold text-xl text-accent">${totalPrice.toLocaleString()}</td>
+                  <td className="p-2 text-right font-bold text-xl text-ink">${totalPrice.toLocaleString()}</td>
                   <td></td>
                 </tr>
               </tfoot>
@@ -169,36 +171,36 @@ export default function CartPage() {
         </div>
  
         {/* Formulario */}
-        <div className="lg:w-1/3 card-glass p-6">
-          <h2 className="text-xl font-bold text-secondary-light mb-4">📋 Datos de facturación</h2>
+        <div className="lg:w-1/3 card p-6">
+          <h2 className="text-xl font-bold text-ink mb-4 text-left">Datos de facturación</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="block font-bold text-secondary-light mb-1">Nombre completo *</label>
+              <label className="block font-bold text-ink mb-1">Nombre completo *</label>
               <input
                 type="text"
                 value={buyer.name}
                 onChange={(e) => setBuyer({ ...buyer, name: e.target.value })}
-                className="input-glass"
+                className="input"
                 required
               />
             </div>
             <div className="mb-3">
-              <label className="block font-bold text-secondary-light mb-1">Teléfono *</label>
+              <label className="block font-bold text-ink mb-1">Teléfono *</label>
               <input
                 type="tel"
                 value={buyer.phone}
                 onChange={(e) => setBuyer({ ...buyer, phone: e.target.value })}
-                className="input-glass"
+                className="input"
                 required
               />
             </div>
             <div className="mb-4">
-              <label className="block font-bold text-secondary-light mb-1">Email *</label>
+              <label className="block font-bold text-ink mb-1">Email *</label>
               <input
                 type="email"
                 value={buyer.email}
                 onChange={(e) => setBuyer({ ...buyer, email: e.target.value })}
-                className="input-glass"
+                className="input"
                 required
               />
             </div>
@@ -207,7 +209,7 @@ export default function CartPage() {
               disabled={loading}
               className="btn-accent w-full"
             >
-              {loading ? 'Procesando...' : `💰 Finalizar compra ($${totalPrice.toLocaleString()})`}
+              {loading ? 'Procesando...' : `Finalizar compra ($${totalPrice.toLocaleString()})`}
             </button>
           </form>
         </div>

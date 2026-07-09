@@ -26,8 +26,8 @@ export default function ProductCard({ id, name, price, pictureUrl, subcategory, 
  
   return (
     <>
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-        <div className="h-48 flex items-center justify-center p-4">
+      <div className="card overflow-hidden hover:shadow-md transition-shadow">
+        <div className="h-48 flex items-center justify-center p-4 bg-neutral">
           <img src={displayImage} alt={name} className="h-full object-contain" />
         </div>
  
@@ -35,10 +35,10 @@ export default function ProductCard({ id, name, price, pictureUrl, subcategory, 
           <h3 className="product-title text-lg">{name}</h3>
  
           {subcategory === 'remeras' && (
-            <p className="text-center text-sm text-gray-500">📏 Talles: S, M, L, XL</p>
+            <p className="text-center text-sm text-muted">Talles: S, M, L, XL</p>
           )}
           {subcategory === 'zapatillas' && (
-            <p className="text-center text-sm text-gray-500">👟 Talles: 34–43</p>
+            <p className="text-center text-sm text-muted">Talles: 34–43</p>
           )}
  
           {/* Selector de color */}
@@ -48,10 +48,10 @@ export default function ProductCard({ id, name, price, pictureUrl, subcategory, 
                 <button
                   key={color.name}
                   onClick={() => setSelectedColor(color)}
-                  className={`px-3 py-1 text-xs rounded-full border-2 transition font-semibold ${
+                  className={`px-3 py-1 text-xs rounded-full border-2 transition font-semibold active:scale-[0.96] ${
                     selectedColor?.name === color.name
-                      ? 'border-red-500 bg-red-50 text-red-600'
-                      : 'border-gray-300 text-gray-600 hover:border-gray-500'
+                      ? 'border-accent bg-accent/10 text-accent-deep'
+                      : 'border-neutral text-muted hover:border-ink/30'
                   }`}
                 >
                   {color.name}
@@ -60,13 +60,14 @@ export default function ProductCard({ id, name, price, pictureUrl, subcategory, 
             </div>
           )}
  
-          <p className="text-center font-bold text-primary mt-2">💰 ${price.toLocaleString()}</p>
+          <p className="text-center font-bold text-ink mt-2">${price.toLocaleString()}</p>
  
           <button
             onClick={() => setShowModal(true)}
-            className="w-full bg-accent hover:bg-accent-dark text-primary-dark py-2 rounded mt-3 font-bold"
+            className="w-full btn-accent py-2 mt-3 flex items-center justify-center gap-2"
           >
-            🛒 Ver detalle y comprar
+            <i className="fas fa-cart-shopping" aria-hidden="true" />
+            Ver detalle y comprar
           </button>
         </div>
       </div>

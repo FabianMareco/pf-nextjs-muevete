@@ -29,8 +29,14 @@ export default function ImageUpload({ onImageUploaded }: { onImageUploaded: (url
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} />
-      {uploading && <p className="text-sm text-gray-500 mt-1">Subiendo...</p>}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleUpload}
+        disabled={uploading}
+        className="text-sm text-ink file:mr-3 file:py-2 file:px-4 file:rounded-control file:border-0 file:bg-ink file:text-paper file:font-semibold hover:file:bg-surface file:transition file:cursor-pointer"
+      />
+      {uploading && <p className="text-sm text-muted mt-1 flex items-center gap-1.5"><i className="fas fa-spinner fa-spin" aria-hidden="true" />Subiendo...</p>}
     </div>
   );
 }

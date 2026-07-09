@@ -30,7 +30,7 @@ export default function ClasesPage() {
   const [showMovimiento, setShowMovimiento] = useState(true);
   const [addedPack, setAddedPack] = useState<any | null>(null);
  
-  useEffect(() => { AOS.init({ duration: 1000 }); }, []);
+  useEffect(() => { AOS.init({ duration: 600, easing: 'ease-out-cubic', once: true }); }, []);
  
   const scrollToPacks = () => packsRef.current?.scrollIntoView({ behavior: 'smooth' });
  
@@ -52,7 +52,7 @@ export default function ClasesPage() {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h3 className="text-center text-2xl font-carter text-secondary-light mb-6" data-aos="fade-up" style={{ fontFamily: "'PermanentMarker-Regular', cursive", textShadow: '4px 4px 0px rgba(238,155,0,0.4), 8px 8px 0px rgba(187,62,3,0.25)' }}>Clases</h3>
+        <h3 className="text-left text-2xl mb-6" data-aos="fade-up">Clases</h3>
  
         <div className="flex flex-row justify-center gap-4 mb-8 mt-8">
           {[21, 22, 11].map((num, idx) => (
@@ -77,15 +77,15 @@ export default function ClasesPage() {
  
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {cardsData.map((card, idx) => (
-            <div key={idx} className="bg-white/10 backdrop-blur-md rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition" data-aos="fade-up" data-aos-delay={idx * 50}>
-              <div className="h-56 bg-gray-200/20 flex items-center justify-center">
+            <div key={idx} className="card overflow-hidden hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay={idx * 50}>
+              <div className="h-56 bg-neutral flex items-center justify-center">
                 <img src={`/multimedia/clases${idx + 1}.png`} alt={card.title} className="h-full w-full object-cover" />
               </div>
               <div className="p-4">
-                <h5 className="text-xl font-bold text-center text-secondary-light mb-2">{card.title}</h5>
-                <p className="text-secondary-light/80 text-sm">{card.description}</p>
-                <button onClick={scrollToPacks} className="mt-4 bg-[#AE2012] hover:bg-[#9B2226] text-white py-2 px-4 rounded-lg w-full transition">
-                  IR A UNA CLASE
+                <h5 className="text-xl font-bold text-center text-ink mb-2">{card.title}</h5>
+                <p className="text-muted text-sm">{card.description}</p>
+                <button onClick={scrollToPacks} className="btn-danger mt-4 w-full py-2">
+                  Ir a una clase
                 </button>
               </div>
             </div>
@@ -93,32 +93,32 @@ export default function ClasesPage() {
         </div>
  
         <div ref={packsRef} className="mt-16">
-          <h3 className="text-center text-2xl font-carter text-secondary-light mb-8" style={{ fontFamily: "'PermanentMarker-Regular', cursive", textShadow: '4px 4px 0px rgba(238,155,0,0.4), 8px 8px 0px rgba(187,62,3,0.25)' }}>✨ Elige tu pack ✨</h3>
+          <h3 className="text-left text-2xl mb-8">Elegí tu pack</h3>
           <div className="flex justify-center gap-4 mb-8 flex-wrap">
-            <button onClick={() => setShowMovimiento(true)} className={`px-6 py-2 rounded-full ${showMovimiento ? 'bg-accent' : 'bg-primary-light'} text-white`}>💃 CLASES PARA MOVERSE</button>
-            <button onClick={() => setShowMovimiento(false)} className={`px-6 py-2 rounded-full ${!showMovimiento ? 'bg-accent' : 'bg-primary-light'} text-white`}>🥗 CURSOS O ASESORÍAS</button>
+            <button onClick={() => setShowMovimiento(true)} className={`px-6 py-2 rounded-full font-semibold transition active:scale-[0.97] ${showMovimiento ? 'bg-accent text-paper' : 'bg-neutral text-ink hover:bg-ink/10'}`}>Clases para moverse</button>
+            <button onClick={() => setShowMovimiento(false)} className={`px-6 py-2 rounded-full font-semibold transition active:scale-[0.97] ${!showMovimiento ? 'bg-accent text-paper' : 'bg-neutral text-ink hover:bg-ink/10'}`}>Cursos y asesorías</button>
           </div>
  
           {showMovimiento ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {movimientoPacks.filter(p => [1,2,3].includes(p.id)).map(pack => (
-                  <div key={pack.id} className="card-glass p-6 text-center">
-                    <h4 className="text-xl font-bold text-secondary-light">💃 {pack.nombre}</h4>
-                    <p className="text-secondary-light/80 text-sm mt-2">{pack.descripcion}</p>
-                    <p className="text-2xl font-bold text-accent mt-4">💰 ${pack.precio.toLocaleString()}</p>
-                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">🛒 Comprar</button>
+                  <div key={pack.id} className="card p-6 text-center">
+                    <h4 className="text-xl font-bold text-ink">{pack.nombre}</h4>
+                    <p className="text-muted text-sm mt-2">{pack.descripcion}</p>
+                    <p className="text-2xl font-bold text-ink mt-4">${pack.precio.toLocaleString()}</p>
+                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">Comprar</button>
                   </div>
                 ))}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                 {movimientoPacks.filter(p => [4,11].includes(p.id)).map(pack => (
-                  <div key={pack.id} className="card-glass p-6 text-center border-2 border-accent transform scale-105">
-                    <span className="bg-accent text-primary-dark text-xs font-bold px-3 py-1 rounded-full">⭐ PREMIUM</span>
-                    <h4 className="text-xl font-bold text-secondary-light mt-2">💃 {pack.nombre}</h4>
-                    <p className="text-secondary-light/80 text-sm mt-2">{pack.descripcion}</p>
-                    <p className="text-2xl font-bold text-accent mt-4">💰 ${pack.precio.toLocaleString()}</p>
-                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">🛒 Comprar</button>
+                  <div key={pack.id} className="card p-6 text-center border-2 border-accent relative">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-paper text-xs font-bold px-3 py-1 rounded-full">Premium</span>
+                    <h4 className="text-xl font-bold text-ink mt-2">{pack.nombre}</h4>
+                    <p className="text-muted text-sm mt-2">{pack.descripcion}</p>
+                    <p className="text-2xl font-bold text-ink mt-4">${pack.precio.toLocaleString()}</p>
+                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">Comprar</button>
                   </div>
                 ))}
               </div>
@@ -127,22 +127,22 @@ export default function ClasesPage() {
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                 {nutricionPacks.filter(p => [5,6,7,9].includes(p.id)).map(pack => (
-                  <div key={pack.id} className="card-glass p-6 text-center">
-                    <h4 className="text-xl font-bold text-secondary-light">🥗 {pack.nombre}</h4>
-                    <p className="text-secondary-light/80 text-sm mt-2">{pack.descripcion}</p>
-                    <p className="text-2xl font-bold text-accent mt-4">💰 ${pack.precio.toLocaleString()}</p>
-                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">🛒 Comprar</button>
+                  <div key={pack.id} className="card p-6 text-center">
+                    <h4 className="text-xl font-bold text-ink">{pack.nombre}</h4>
+                    <p className="text-muted text-sm mt-2">{pack.descripcion}</p>
+                    <p className="text-2xl font-bold text-ink mt-4">${pack.precio.toLocaleString()}</p>
+                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">Comprar</button>
                   </div>
                 ))}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                 {nutricionPacks.filter(p => [8,10].includes(p.id)).map(pack => (
-                  <div key={pack.id} className="card-glass p-6 text-center border-2 border-accent transform scale-105">
-                    <span className="bg-accent text-primary-dark text-xs font-bold px-3 py-1 rounded-full">⭐ PREMIUM</span>
-                    <h4 className="text-xl font-bold text-secondary-light mt-2">🥗 {pack.nombre}</h4>
-                    <p className="text-secondary-light/80 text-sm mt-2">{pack.descripcion}</p>
-                    <p className="text-2xl font-bold text-accent mt-4">💰 ${pack.precio.toLocaleString()}</p>
-                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">🛒 Comprar</button>
+                  <div key={pack.id} className="card p-6 text-center border-2 border-accent relative">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-paper text-xs font-bold px-3 py-1 rounded-full">Premium</span>
+                    <h4 className="text-xl font-bold text-ink mt-2">{pack.nombre}</h4>
+                    <p className="text-muted text-sm mt-2">{pack.descripcion}</p>
+                    <p className="text-2xl font-bold text-ink mt-4">${pack.precio.toLocaleString()}</p>
+                    <button onClick={() => handleBuyPack(pack)} className="btn-accent w-full mt-4">Comprar</button>
                   </div>
                 ))}
               </div>

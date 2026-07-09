@@ -44,54 +44,54 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-fixed" style={{ backgroundImage: "url('/multimedia/C.jpeg')" }}>
-      <div className="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-2xl w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-6">📝 Crear Cuenta</h1>
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-fixed p-4" style={{ backgroundImage: "linear-gradient(rgba(20,17,15,0.55), rgba(20,17,15,0.55)), url('/multimedia/C.jpg')" }}>
+      <div className="card w-full max-w-md p-8">
+        <h1 className="text-3xl font-bold text-center text-ink mb-6">Crear cuenta</h1>
 
         <form onSubmit={handleRegister}>
           <div className="mb-4">
-            <label className="block font-bold mb-1">Email</label>
+            <label className="block font-bold mb-1 text-ink">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="input"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block font-bold mb-1">Contraseña</label>
+            <label className="block font-bold mb-1 text-ink">Contraseña</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="input"
               required
             />
           </div>
           <div className="mb-6">
-            <label className="block font-bold mb-1">Confirmar Contraseña</label>
+            <label className="block font-bold mb-1 text-ink">Confirmar contraseña</label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="input"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition disabled:opacity-50"
+            className="w-full btn-accent disabled:opacity-50"
           >
             {loading ? 'Registrando...' : 'Registrarse'}
           </button>
         </form>
 
-        <p className="text-center mt-4 text-sm">
-          ¿Ya tienes cuenta?{' '}
-          <Link href="/login" className="text-red-600 hover:underline">
-            Inicia sesión aquí
+        <p className="text-center mt-4 text-sm text-muted">
+          ¿Ya tenés cuenta?{' '}
+          <Link href="/login" className="text-accent-deep font-semibold hover:underline">
+            Iniciá sesión acá
           </Link>
         </p>
       </div>

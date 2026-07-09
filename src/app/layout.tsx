@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
+import { Bricolage_Grotesque, Manrope } from 'next/font/google';
 import { CartProvider } from '@/context/CartContext';
 import { AuthProvider } from '@/context/AuthContext';
 import Navbar from '@/components/Navbar';
@@ -9,15 +10,29 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'aos/dist/aos.css';
 import './globals.css';
 
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  weight: ['500', '700', '800'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: 'MUEVETE - Educación del movimiento sin límites',
-  description: 'Plataforma de e-learning para danza, yoga y movimiento',
+  title: 'MUEVETE — El movimiento, con actitud',
+  description: 'Clases de danza, yoga y nutrición en vivo y grabadas, más merchandising oficial. Movete a tu ritmo.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className="flex flex-col min-h-screen">
+    <html lang="es" className={`${bricolage.variable} ${manrope.variable}`}>
+      <body className="flex flex-col min-h-screen bg-paper text-ink font-sans">
         <AuthProvider>
           <CartProvider>
             <Navbar />

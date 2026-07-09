@@ -6,13 +6,33 @@ import Carousel from '@/components/Carousel';
 import Link from 'next/link';
 
 export default function HomePage() {
-  useEffect(() => { AOS.init({ duration: 1000 }); }, []);
+  useEffect(() => { AOS.init({ duration: 600, easing: 'ease-out-cubic', once: true }); }, []);
   return (
     <>
-      <Carousel />
-      <div className="container mx-auto px-4 py-8">
-        <div data-aos="fade-up"><h3 className="text-center text-2xl font-carter text-secondary-light mb-6" style={{ fontFamily: "'PermanentMarker-Regular', cursive", textShadow: '4px 4px 0px rgba(238,155,0,0.4), 8px 8px 0px rgba(187,62,3,0.25)' }}>La importancia de moverse y sentirse vivo</h3></div>
-        <div data-aos="fade-down"><p className="texto-contenido">
+      <section className="bg-ink">
+        <div className="container mx-auto px-4 py-16 md:py-20">
+          <h1 className="font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl">
+            Movete hoy. A tu ritmo.
+          </h1>
+          <p className="text-paper/70 text-base md:text-lg mt-5 max-w-md">
+            Danza, yoga y nutrición guiada, en vivo y grabadas, para cualquier nivel.
+          </p>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <Link href="/clases" className="btn-accent">Ver clases</Link>
+            <Link href="/nosotros" className="border-2 border-paper/30 text-paper hover:border-paper font-bold py-2.5 px-5 rounded-control transition active:scale-[0.97]">
+              Conocenos
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 py-10">
+        <Carousel />
+      </div>
+
+      <div className="container mx-auto px-4 pb-8">
+        <div data-aos="fade-up"><h2 className="text-left">La importancia de moverse y sentirse vivo</h2></div>
+        <div data-aos="fade-up"><p className="texto-contenido">
             El movimiento es vida, y queremos compartirlo contigo. En MUEVETE, nuestra plataforma de e-learning,
             te invitamos a redescubrir la alegría, la libertad y los beneficios de mover tu cuerpo. Ya sea a través
             de la danza, el yoga, el stretching o cualquier otra disciplina, aquí encontrarás un espacio pensado para ti,
@@ -25,8 +45,8 @@ export default function HomePage() {
             Te ayudarán a liberar tensiones, fortalecer tu postura y encontrar ese equilibrio que tantas veces necesitamos en el día a día.
             Aquí, cada movimiento cuenta. ¿Listo para empezar tu viaje con nosotros?
           </p></div>
-        <div data-aos="fade-up"><h3 className="text-center text-2xl font-carter text-secondary-light mb-6" style={{ fontFamily: "'PermanentMarker-Regular', cursive", textShadow: '4px 4px 0px rgba(238,155,0,0.4), 8px 8px 0px rgba(187,62,3,0.25)' }}>Nuestras clases</h3></div>
-        <div data-aos="fade-down"> <p className="texto-contenido">
+        <div data-aos="fade-up" className="mt-10"><h2 className="text-left">Nuestras clases</h2></div>
+        <div data-aos="fade-up"><p className="texto-contenido">
             En nuestra plataforma, todos son bienvenidos. No importa tu edad, condición física o experiencia previa:
             este espacio está diseñado para ti. Solo necesitas suscribirte y dar el primer paso hacia un estilo de vida más saludable,
             dinámico y lleno de energía. Te ofrecemos una amplia variedad de clases, tanto en vivo como grabadas,
@@ -35,7 +55,14 @@ export default function HomePage() {
             ¿Estás listo para descubrir todo lo que el movimiento puede hacer por ti? ¡Únete hoy y transforma tu vida, un paso a la vez!
           </p></div>
       </div>
-      <div className="text-center my-8"><h4 className="text-xl font-bold bg-primary-dark/80 inline-block px-6 py-3 rounded-full text-secondary-light">Aprender nunca fue tan fácil como ahora en ¡MUEVETE!</h4><h4 className="mt-4 text-secondary-light">Hay una clase preparada para que puedas empezar a aprender <Link href="/login" className="text-accent hover:underline">¡YA!</Link></h4></div>
+
+      <section className="bg-neutral">
+        <div className="container mx-auto px-4 py-14 text-center">
+          <h3 className="mb-3">Aprender nunca fue tan fácil como ahora en MUEVETE</h3>
+          <p className="text-muted mb-6">Hay una clase preparada para que empieces a aprender hoy mismo.</p>
+          <Link href="/login" className="btn-primary">Empezar ahora</Link>
+        </div>
+      </section>
     </>
   );
 }
