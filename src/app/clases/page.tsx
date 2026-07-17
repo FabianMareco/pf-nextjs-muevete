@@ -77,13 +77,30 @@ export default function ClasesPage() {
  
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {cardsData.map((card, idx) => (
-            <div key={idx} className="card overflow-hidden hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay={idx * 50}>
-              <div className="h-56 bg-neutral flex items-center justify-center">
-                <img src={`/multimedia/clases${idx + 1}.png`} alt={card.title} className="h-full w-full object-cover" />
-              </div>
-              <div className="p-4">
-                <h5 className="text-xl font-bold text-center text-ink mb-2">{card.title}</h5>
-                <p className="text-muted text-sm">{card.description}</p>
+            <div
+              key={idx}
+              className="tilt-card relative overflow-hidden rounded-card border border-neutral min-h-[320px] flex flex-col justify-end"
+              data-aos="fade-up"
+              data-aos-delay={idx * 50}
+              onMouseMove={(e) => {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                const el = e.currentTarget;
+                const r = el.getBoundingClientRect();
+                const px = (e.clientX - r.left) / r.width - 0.5;
+                const py = (e.clientY - r.top) / r.height - 0.5;
+                el.style.transform = `perspective(700px) rotateX(${py * -6}deg) rotateY(${px * 6}deg) scale(1.02)`;
+              }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = ''; }}
+            >
+              <img
+                src={`/multimedia/clases${idx + 1}.png`}
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover opacity-70"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/10" />
+              <div className="relative p-5">
+                <h5 className="text-xl font-bold text-center text-paper mb-2">{card.title}</h5>
+                <p className="text-paper/75 text-sm">{card.description}</p>
                 <button onClick={scrollToPacks} className="btn-danger mt-4 w-full py-2">
                   Ir a una clase
                 </button>
