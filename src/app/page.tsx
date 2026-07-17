@@ -30,25 +30,33 @@ export default function HomePage() {
     <>
       <section className="bg-ink">
         <div className="container mx-auto px-4 py-16 md:py-20">
-          <h1 className="hero-in font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl [animation-delay:60ms]">
-            Movete hoy. A tu ritmo.
-          </h1>
-          <p className="hero-in text-paper/70 text-base md:text-lg mt-5 max-w-md [animation-delay:160ms]">
-            Danza, yoga y nutrición guiada, en vivo y grabadas, para cualquier nivel.
-          </p>
-          <div className="hero-in flex flex-wrap gap-3 mt-8 [animation-delay:260ms]">
-            <Link
-              href="/clases"
-              ref={magnetRef}
-              onMouseMove={handleMagnetMove}
-              onMouseLeave={handleMagnetLeave}
-              className="btn-accent"
-            >
-              Ver clases
-            </Link>
-            <Link href="#nosotros" className="border-2 border-paper/30 text-paper hover:border-paper font-bold py-2.5 px-5 rounded-control transition active:scale-[0.97]">
-              Conocenos
-            </Link>
+          <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-8">
+            <div className="lg:w-[60%]">
+              <h1 className="hero-in font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl [animation-delay:60ms]">
+                Movete hoy. A tu ritmo.
+              </h1>
+              <p className="hero-in text-paper/70 text-base md:text-lg mt-5 max-w-md [animation-delay:160ms]">
+                Danza, yoga y nutrición guiada, en vivo y grabadas, para cualquier nivel.
+              </p>
+              <div className="hero-in flex flex-wrap gap-3 mt-8 [animation-delay:260ms]">
+                <Link
+                  href="/clases"
+                  ref={magnetRef}
+                  onMouseMove={handleMagnetMove}
+                  onMouseLeave={handleMagnetLeave}
+                  className="btn-accent"
+                >
+                  Ver clases
+                </Link>
+                <Link href="#nosotros" className="border-2 border-paper/30 text-paper hover:border-paper font-bold py-2.5 px-5 rounded-control transition active:scale-[0.97]">
+                  Conocenos
+                </Link>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-[40%]">
+              <Carousel />
+            </div>
           </div>
         </div>
 
@@ -60,10 +68,6 @@ export default function HomePage() {
               </span>
             ))}
           </div>
-        </div>
-
-        <div className="container mx-auto px-4 pt-12 pb-16 md:pb-24">
-          <Carousel />
         </div>
       </section>
 
