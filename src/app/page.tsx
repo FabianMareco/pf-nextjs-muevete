@@ -31,7 +31,7 @@ export default function HomePage() {
       <section className="bg-ink">
         <div className="container mx-auto px-4 py-16 md:py-20">
           <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-8">
-            <div className="lg:w-[60%]">
+            <div className="lg:w-[45%]">
               <h1 className="hero-in font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl [animation-delay:60ms]">
                 Movete hoy. A tu ritmo.
               </h1>
@@ -54,7 +54,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="w-full lg:w-[40%]">
+            <div className="w-full lg:w-[55%]">
               <Carousel />
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="container mx-auto px-4 pb-8">
+      <div className="container mx-auto px-4 pt-14 md:pt-20 pb-8">
         <div data-aos="fade-up"><h2 className="text-left">La importancia de moverse y sentirse vivo</h2></div>
         <div data-aos="fade-up"><p className="texto-contenido">
             El movimiento es vida, y queremos compartirlo contigo. En MUEVETE, nuestra plataforma de e-learning,
