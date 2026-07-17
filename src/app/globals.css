@@ -4,8 +4,19 @@
 
 @layer base {
   body {
-    background: #F7F5F2;
+    background-color: #F7F5F2;
+    background-image: url('/multimedia/bgmuevete.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      background-attachment: scroll;
+    }
   }
 
   h1, h2, h3, h4 {
