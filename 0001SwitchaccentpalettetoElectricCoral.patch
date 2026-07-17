@@ -1,0 +1,59 @@
+From 0aaa487e71dec56be6b4174a699ada7571e529ec Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 17 Jul 2026 05:33:30 +0000
+Subject: [PATCH] Switch accent palette to Electric Coral
+
+Push the CTA accent from orange-coral to a more saturated pink-red
+(#FF2D55) for more visual energy, and shift danger to a true red so
+it stays visually distinct from the new accent hue.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Lnk4T93LH9WLa79FuvsXSG
+---
+ src/app/globals.css | 4 ++--
+ tailwind.config.js  | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/app/globals.css b/src/app/globals.css
+index 786fdb8..f0aee04 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -29,12 +29,12 @@
+   }
+ 
+   ::selection {
+-    background: #FF4433;
++    background: #FF2D55;
+     color: #F7F5F2;
+   }
+ 
+   *:focus-visible {
+-    outline: 2px solid #FF4433;
++    outline: 2px solid #FF2D55;
+     outline-offset: 2px;
+   }
+ }
+diff --git a/tailwind.config.js b/tailwind.config.js
+index b02a5df..bb62892 100644
+--- a/tailwind.config.js
++++ b/tailwind.config.js
+@@ -13,12 +13,12 @@ module.exports = {
+         'paper': '#F7F5F2',
+         'neutral': '#E7E5E2',
+         'muted': '#6B6459',
+-        'accent': '#FF4433',
+-        'accent-deep': '#C22415',
++        'accent': '#FF2D55',
++        'accent-deep': '#C4123B',
+         'success': '#1F9D55',
+         'success-dark': '#15793F',
+-        'danger': '#B91C4C',
+-        'danger-dark': '#8F1439',
++        'danger': '#DC2626',
++        'danger-dark': '#B91C1C',
+       },
+       fontFamily: {
+         'display': ['var(--font-display)', 'sans-serif'],
+-- 
+2.43.0
+

@@ -1,0 +1,70 @@
+From 81f01827e4a8aa048783fb6d01ea92bd6ec2af65 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 17 Jul 2026 15:24:43 +0000
+Subject: [PATCH] Enlarge hero carousel, add breathing room before content
+ section
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- Carousel grows from a 40%-wide 3:4 panel to a 55%-wide 5:4 panel
+  (text column narrows from 60% to 45% to match), landing on the
+  "panorámico grande" option from a set of size/shape previews.
+- Added top padding before "La importancia de moverse y sentirse
+  vivo" so it doesn't sit flush against the end of the dark hero
+  section.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Lnk4T93LH9WLa79FuvsXSG
+---
+ src/app/page.tsx            | 6 +++---
+ src/components/Carousel.tsx | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index c99f5f4..f08e3de 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -31,7 +31,7 @@ export default function HomePage() {
+       <section className="bg-ink">
+         <div className="container mx-auto px-4 py-16 md:py-20">
+           <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-8">
+-            <div className="lg:w-[60%]">
++            <div className="lg:w-[45%]">
+               <h1 className="hero-in font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl [animation-delay:60ms]">
+                 Movete hoy. A tu ritmo.
+               </h1>
+@@ -54,7 +54,7 @@ export default function HomePage() {
+               </div>
+             </div>
+ 
+-            <div className="w-full lg:w-[40%]">
++            <div className="w-full lg:w-[55%]">
+               <Carousel />
+             </div>
+           </div>
+@@ -71,7 +71,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      <div className="container mx-auto px-4 pb-8">
++      <div className="container mx-auto px-4 pt-14 md:pt-20 pb-8">
+         <div data-aos="fade-up"><h2 className="text-left">La importancia de moverse y sentirse vivo</h2></div>
+         <div data-aos="fade-up"><p className="texto-contenido">
+             El movimiento es vida, y queremos compartirlo contigo. En MUEVETE, nuestra plataforma de e-learning,
+diff --git a/src/components/Carousel.tsx b/src/components/Carousel.tsx
+index d25545f..f2b7b3b 100644
+--- a/src/components/Carousel.tsx
++++ b/src/components/Carousel.tsx
+@@ -12,7 +12,7 @@ export default function Carousel() {
+   return (
+     <div className="relative w-full">
+       <div className="absolute -inset-10 bg-accent/15 blur-[100px] rounded-full pointer-events-none" aria-hidden="true" />
+-      <div className="carousel-fade relative aspect-[3/4]">
++      <div className="carousel-fade relative aspect-[5/4]">
+         {images.map((num, idx) => (
+           <div key={num} className={`absolute inset-0 transition-opacity duration-700 ease-out ${idx === current ? 'opacity-100' : 'opacity-0'}`}>
+             <img src={`/multimedia/${num}.png`} alt="slide" className="w-full h-full object-cover" />
+-- 
+2.43.0
+

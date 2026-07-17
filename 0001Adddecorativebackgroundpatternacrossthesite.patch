@@ -1,0 +1,54 @@
+From 8db1d9d08cd1cfa9d6396c521f8e963902dfc756 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 17 Jul 2026 16:36:16 +0000
+Subject: [PATCH] Add decorative background pattern across the site
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Replaces the flat pale paper background with a full-bleed illustrated
+pattern (dance doodles + soft pink watercolor accents), fixed behind
+scrolling content on desktop for a subtle depth effect, scrolling
+normally on mobile (fixed backgrounds are unreliable/costly there).
+Falls back to the original paper color if the image fails to load.
+
+Note: the image itself (public/multimedia/bgmuevete.png) isn't in
+this diff — it needs to be added separately since it was supplied as
+a pasted image rather than a file.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Lnk4T93LH9WLa79FuvsXSG
+---
+ src/app/globals.css | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/src/app/globals.css b/src/app/globals.css
+index 8c9ed80..c425fed 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -4,10 +4,21 @@
+ 
+ @layer base {
+   body {
+-    background: #F7F5F2;
++    background-color: #F7F5F2;
++    background-image: url('/multimedia/bgmuevete.png');
++    background-size: cover;
++    background-position: center top;
++    background-repeat: no-repeat;
++    background-attachment: fixed;
+     min-height: 100vh;
+   }
+ 
++  @media (max-width: 768px) {
++    body {
++      background-attachment: scroll;
++    }
++  }
++
+   h1, h2, h3, h4 {
+     font-family: var(--font-display), sans-serif;
+     font-weight: 800;
+-- 
+2.43.0
+

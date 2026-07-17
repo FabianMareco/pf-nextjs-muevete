@@ -1,0 +1,101 @@
+From 371bf32079ba9f39aa7eda4401a44b0afc339c82 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 17 Jul 2026 06:56:50 +0000
+Subject: [PATCH] Split hero into text + carousel columns
+
+The carousel now sits to the right of the hero copy at 40% width
+(60/40 split) instead of running full-width below it, with a portrait
+3:4 aspect ratio so it reads as a tall panel rather than a wide strip.
+On mobile it stacks below the text at full width, still portrait.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Lnk4T93LH9WLa79FuvsXSG
+---
+ src/app/page.tsx            | 50 ++++++++++++++++++++-----------------
+ src/components/Carousel.tsx |  2 +-
+ 2 files changed, 28 insertions(+), 24 deletions(-)
+
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index bbdaaa1..c99f5f4 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -30,25 +30,33 @@ export default function HomePage() {
+     <>
+       <section className="bg-ink">
+         <div className="container mx-auto px-4 py-16 md:py-20">
+-          <h1 className="hero-in font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl [animation-delay:60ms]">
+-            Movete hoy. A tu ritmo.
+-          </h1>
+-          <p className="hero-in text-paper/70 text-base md:text-lg mt-5 max-w-md [animation-delay:160ms]">
+-            Danza, yoga y nutrición guiada, en vivo y grabadas, para cualquier nivel.
+-          </p>
+-          <div className="hero-in flex flex-wrap gap-3 mt-8 [animation-delay:260ms]">
+-            <Link
+-              href="/clases"
+-              ref={magnetRef}
+-              onMouseMove={handleMagnetMove}
+-              onMouseLeave={handleMagnetLeave}
+-              className="btn-accent"
+-            >
+-              Ver clases
+-            </Link>
+-            <Link href="#nosotros" className="border-2 border-paper/30 text-paper hover:border-paper font-bold py-2.5 px-5 rounded-control transition active:scale-[0.97]">
+-              Conocenos
+-            </Link>
++          <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-8">
++            <div className="lg:w-[60%]">
++              <h1 className="hero-in font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl [animation-delay:60ms]">
++                Movete hoy. A tu ritmo.
++              </h1>
++              <p className="hero-in text-paper/70 text-base md:text-lg mt-5 max-w-md [animation-delay:160ms]">
++                Danza, yoga y nutrición guiada, en vivo y grabadas, para cualquier nivel.
++              </p>
++              <div className="hero-in flex flex-wrap gap-3 mt-8 [animation-delay:260ms]">
++                <Link
++                  href="/clases"
++                  ref={magnetRef}
++                  onMouseMove={handleMagnetMove}
++                  onMouseLeave={handleMagnetLeave}
++                  className="btn-accent"
++                >
++                  Ver clases
++                </Link>
++                <Link href="#nosotros" className="border-2 border-paper/30 text-paper hover:border-paper font-bold py-2.5 px-5 rounded-control transition active:scale-[0.97]">
++                  Conocenos
++                </Link>
++              </div>
++            </div>
++
++            <div className="w-full lg:w-[40%]">
++              <Carousel />
++            </div>
+           </div>
+         </div>
+ 
+@@ -61,10 +69,6 @@ export default function HomePage() {
+             ))}
+           </div>
+         </div>
+-
+-        <div className="container mx-auto px-4 pt-12 pb-16 md:pb-24">
+-          <Carousel />
+-        </div>
+       </section>
+ 
+       <div className="container mx-auto px-4 pb-8">
+diff --git a/src/components/Carousel.tsx b/src/components/Carousel.tsx
+index b16ed76..d25545f 100644
+--- a/src/components/Carousel.tsx
++++ b/src/components/Carousel.tsx
+@@ -12,7 +12,7 @@ export default function Carousel() {
+   return (
+     <div className="relative w-full">
+       <div className="absolute -inset-10 bg-accent/15 blur-[100px] rounded-full pointer-events-none" aria-hidden="true" />
+-      <div className="carousel-fade relative h-96 md:h-[550px]">
++      <div className="carousel-fade relative aspect-[3/4]">
+         {images.map((num, idx) => (
+           <div key={num} className={`absolute inset-0 transition-opacity duration-700 ease-out ${idx === current ? 'opacity-100' : 'opacity-0'}`}>
+             <img src={`/multimedia/${num}.png`} alt="slide" className="w-full h-full object-cover" />
+-- 
+2.43.0
+

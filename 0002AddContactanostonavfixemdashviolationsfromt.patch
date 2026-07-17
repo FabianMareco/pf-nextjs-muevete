@@ -1,0 +1,84 @@
+From db0aa686bf6e17f3f847b25acdae1bccae181b1e Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 17 Jul 2026 06:02:28 +0000
+Subject: [PATCH 2/2] Add Contactanos to nav, fix em-dash violations from
+ taste-skill audit
+
+- Navbar was missing a link to the existing /contactanos page
+- Ran the installed taste-skill's pre-flight check against the site;
+  its hard em-dash ban (Section 9.G) caught 4 stray em/en-dashes left
+  over from the rebrand copy (title, footer, size range, body copy).
+  Replaced with plain hyphens/commas.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Lnk4T93LH9WLa79FuvsXSG
+---
+ src/app/layout.tsx             | 2 +-
+ src/components/Footer.tsx      | 2 +-
+ src/components/Navbar.tsx      | 3 ++-
+ src/components/ProductCard.tsx | 2 +-
+ 4 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/src/app/layout.tsx b/src/app/layout.tsx
+index de40c1a..1afbe34 100644
+--- a/src/app/layout.tsx
++++ b/src/app/layout.tsx
+@@ -25,7 +25,7 @@ const manrope = Manrope({
+ });
+ 
+ export const metadata: Metadata = {
+-  title: 'MUEVETE — El movimiento, con actitud',
++  title: 'MUEVETE - El movimiento, con actitud',
+   description: 'Clases de danza, yoga y nutrición en vivo y grabadas, más merchandising oficial. Movete a tu ritmo.',
+ };
+ 
+diff --git a/src/components/Footer.tsx b/src/components/Footer.tsx
+index 733f673..2977817 100644
+--- a/src/components/Footer.tsx
++++ b/src/components/Footer.tsx
+@@ -2,7 +2,7 @@ export default function Footer() {
+   return (
+     <footer className="bg-ink text-paper/70 py-8 mt-auto">
+       <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+-        <p className="text-sm">© 2025 MUEVETE — Todos los derechos reservados</p>
++        <p className="text-sm">© 2025 MUEVETE - Todos los derechos reservados</p>
+         <div className="flex gap-5 text-lg">
+           <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="hover:text-accent transition-colors" aria-label="Instagram">
+             <i className="fab fa-instagram"></i>
+diff --git a/src/components/Navbar.tsx b/src/components/Navbar.tsx
+index 20cc51a..984c43f 100644
+--- a/src/components/Navbar.tsx
++++ b/src/components/Navbar.tsx
+@@ -10,6 +10,7 @@ const navLinks = [
+   { name: 'Nosotros', href: '/nosotros' },
+   { name: 'Clases', href: '/clases' },
+   { name: 'Merchandising', href: '/merchandising' },
++  { name: 'Contactanos', href: '/contactanos' },
+ ];
+ 
+ export default function Navbar() {
+@@ -30,7 +31,7 @@ export default function Navbar() {
+           <span className="logo-text">MUEVETE</span>
+         </Link>
+ 
+-        <ul className="hidden lg:flex items-center gap-7">
++        <ul className="hidden lg:flex items-center gap-5 xl:gap-7">
+           {navLinks.map((link) => (
+             <li key={link.href}>
+               <Link href={link.href} className="text-sm font-semibold text-paper/75 hover:text-paper transition-colors">
+diff --git a/src/components/ProductCard.tsx b/src/components/ProductCard.tsx
+index 5c78ba3..fab98ac 100644
+--- a/src/components/ProductCard.tsx
++++ b/src/components/ProductCard.tsx
+@@ -38,7 +38,7 @@ export default function ProductCard({ id, name, price, pictureUrl, subcategory,
+             <p className="text-center text-sm text-muted">Talles: S, M, L, XL</p>
+           )}
+           {subcategory === 'zapatillas' && (
+-            <p className="text-center text-sm text-muted">Talles: 34–43</p>
++            <p className="text-center text-sm text-muted">Talles: 34-43</p>
+           )}
+  
+           {/* Selector de color */}
+-- 
+2.43.0
+

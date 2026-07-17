@@ -1,0 +1,208 @@
+From f016f6b8d3a68cd11046b43fa30d2364d65e076f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 17 Jul 2026 06:02:21 +0000
+Subject: [PATCH 1/2] Add live motion: hero entrance, magnetic CTA, marquee,
+ tilt cards
+
+Bring the interactive motion demo into the real site instead of
+HyperFrames video rendering, per Emil Kowalski's animation framework
+(purposeful, reduced-motion-safe, transform/opacity only):
+
+- Staggered hero entrance on the home page
+- Magnetic pull on the primary hero CTA
+- A discipline-name marquee strip (max one per page)
+- Discipline cards on /clases now show their real photo as a 70%
+  opacity background with a gradient scrim for legibility, plus a
+  mouse-tracked 3D tilt on hover
+
+All effects collapse to static under prefers-reduced-motion.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Lnk4T93LH9WLa79FuvsXSG
+---
+ src/app/clases/page.tsx | 31 ++++++++++++++++++++------
+ src/app/globals.css     | 40 +++++++++++++++++++++++++++++++++
+ src/app/page.tsx        | 49 ++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 107 insertions(+), 13 deletions(-)
+
+diff --git a/src/app/clases/page.tsx b/src/app/clases/page.tsx
+index 6739813..ff3273f 100644
+--- a/src/app/clases/page.tsx
++++ b/src/app/clases/page.tsx
+@@ -77,13 +77,30 @@ export default function ClasesPage() {
+  
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+           {cardsData.map((card, idx) => (
+-            <div key={idx} className="card overflow-hidden hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay={idx * 50}>
+-              <div className="h-56 bg-neutral flex items-center justify-center">
+-                <img src={`/multimedia/clases${idx + 1}.png`} alt={card.title} className="h-full w-full object-cover" />
+-              </div>
+-              <div className="p-4">
+-                <h5 className="text-xl font-bold text-center text-ink mb-2">{card.title}</h5>
+-                <p className="text-muted text-sm">{card.description}</p>
++            <div
++              key={idx}
++              className="tilt-card relative overflow-hidden rounded-card border border-neutral min-h-[320px] flex flex-col justify-end"
++              data-aos="fade-up"
++              data-aos-delay={idx * 50}
++              onMouseMove={(e) => {
++                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
++                const el = e.currentTarget;
++                const r = el.getBoundingClientRect();
++                const px = (e.clientX - r.left) / r.width - 0.5;
++                const py = (e.clientY - r.top) / r.height - 0.5;
++                el.style.transform = `perspective(700px) rotateX(${py * -6}deg) rotateY(${px * 6}deg) scale(1.02)`;
++              }}
++              onMouseLeave={(e) => { e.currentTarget.style.transform = ''; }}
++            >
++              <img
++                src={`/multimedia/clases${idx + 1}.png`}
++                alt=""
++                className="absolute inset-0 h-full w-full object-cover opacity-70"
++              />
++              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/10" />
++              <div className="relative p-5">
++                <h5 className="text-xl font-bold text-center text-paper mb-2">{card.title}</h5>
++                <p className="text-paper/75 text-sm">{card.description}</p>
+                 <button onClick={scrollToPacks} className="btn-danger mt-4 w-full py-2">
+                   Ir a una clase
+                 </button>
+diff --git a/src/app/globals.css b/src/app/globals.css
+index f0aee04..37c40a7 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -105,4 +105,44 @@
+   .pack-title {
+     @apply text-ink font-bold text-center;
+   }
++
++  @keyframes hero-in {
++    from { opacity: 0; transform: translateY(18px); }
++    to { opacity: 1; transform: translateY(0); }
++  }
++
++  .hero-in {
++    opacity: 0;
++    animation: hero-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
++  }
++
++  .tilt-card {
++    transform-style: preserve-3d;
++    will-change: transform;
++    transition: transform 120ms ease-out, box-shadow 200ms ease;
++  }
++
++  @keyframes marquee-scroll {
++    to { transform: translateX(-50%); }
++  }
++
++  .marquee-track {
++    animation: marquee-scroll 22s linear infinite;
++  }
++
++  @media (prefers-reduced-motion: reduce) {
++    .hero-in {
++      animation: none;
++      opacity: 1;
++      transform: none;
++    }
++
++    .tilt-card {
++      transition: none;
++    }
++
++    .marquee-track {
++      animation: none;
++    }
++  }
+ }
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index 4300741..8ef8a98 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -1,24 +1,51 @@
+ 'use client';
+-import { useEffect } from 'react';
++import { useEffect, useRef } from 'react';
+ import AOS from 'aos';
+ import 'aos/dist/aos.css';
+ import Carousel from '@/components/Carousel';
+ import Link from 'next/link';
+ 
++const disciplinas = ['DANZA JAZZ', 'YOGA', 'TANGO', 'PILATES MAT', 'FLAMENCO', 'DANZA CONTEMPORÁNEA', 'ESTILOS URBANOS', 'DANZA CLÁSICA'];
++
+ export default function HomePage() {
++  const magnetRef = useRef<HTMLAnchorElement>(null);
++
+   useEffect(() => { AOS.init({ duration: 600, easing: 'ease-out-cubic', once: true }); }, []);
++
++  const handleMagnetMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
++    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
++    const el = magnetRef.current;
++    if (!el) return;
++    const r = el.getBoundingClientRect();
++    const x = (e.clientX - r.left - r.width / 2) * 0.25;
++    const y = (e.clientY - r.top - r.height / 2) * 0.35;
++    el.style.transform = `translate(${x}px, ${y}px)`;
++  };
++
++  const handleMagnetLeave = () => {
++    if (magnetRef.current) magnetRef.current.style.transform = '';
++  };
++
+   return (
+     <>
+       <section className="bg-ink">
+         <div className="container mx-auto px-4 py-16 md:py-20">
+-          <h1 className="font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl">
++          <h1 className="hero-in font-display font-extrabold text-paper text-4xl md:text-6xl tracking-tight leading-[1.02] max-w-xl [animation-delay:60ms]">
+             Movete hoy. A tu ritmo.
+           </h1>
+-          <p className="text-paper/70 text-base md:text-lg mt-5 max-w-md">
++          <p className="hero-in text-paper/70 text-base md:text-lg mt-5 max-w-md [animation-delay:160ms]">
+             Danza, yoga y nutrición guiada, en vivo y grabadas, para cualquier nivel.
+           </p>
+-          <div className="flex flex-wrap gap-3 mt-8">
+-            <Link href="/clases" className="btn-accent">Ver clases</Link>
++          <div className="hero-in flex flex-wrap gap-3 mt-8 [animation-delay:260ms]">
++            <Link
++              href="/clases"
++              ref={magnetRef}
++              onMouseMove={handleMagnetMove}
++              onMouseLeave={handleMagnetLeave}
++              className="btn-accent"
++            >
++              Ver clases
++            </Link>
+             <Link href="/nosotros" className="border-2 border-paper/30 text-paper hover:border-paper font-bold py-2.5 px-5 rounded-control transition active:scale-[0.97]">
+               Conocenos
+             </Link>
+@@ -26,6 +53,16 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
++      <div className="marquee-wrap bg-ink py-5 overflow-hidden border-t border-white/10">
++        <div className="marquee-track flex gap-12 w-max">
++          {[...disciplinas, ...disciplinas].map((d, i) => (
++            <span key={i} className="text-paper font-display font-extrabold text-lg md:text-xl tracking-tight whitespace-nowrap flex items-center gap-3">
++              {d}<span className="text-accent">•</span>
++            </span>
++          ))}
++        </div>
++      </div>
++
+       <div className="container mx-auto px-4 py-10">
+         <Carousel />
+       </div>
+@@ -39,7 +76,7 @@ export default function HomePage() {
+             sin importar si estás empezando o si ya llevas tiempo en este camino. Sabemos que cada persona vive el movimiento
+             de forma única. Por eso, hemos creado una experiencia que combina el aprendizaje en línea con la práctica activa,
+             adaptada a tus necesidades y ritmo de vida. El movimiento no solo nos mantiene en forma, también transforma nuestra mente,
+-            nuestras emociones y nuestra salud. En nuestras clases de danza –desde el ballet clásico hasta el jazz o la improvisación contemporánea–
++            nuestras emociones y nuestra salud. En nuestras clases de danza, desde el ballet clásico hasta el jazz o la improvisación contemporánea,
+             descubrirás cómo conectar con tu creatividad y expresión personal mientras mejoras tu coordinación y flexibilidad.
+             Nuestras sesiones de yoga y stretching son mucho más que ejercicios: son un regalo para tu cuerpo y tu mente.
+             Te ayudarán a liberar tensiones, fortalecer tu postura y encontrar ese equilibrio que tantas veces necesitamos en el día a día.
+-- 
+2.43.0
+
