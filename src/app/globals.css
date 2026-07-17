@@ -130,6 +130,11 @@
     animation: marquee-scroll 22s linear infinite;
   }
 
+  .carousel-fade {
+    mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 68%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 68%, transparent 100%);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-in {
       animation: none;

@@ -10,8 +10,9 @@ export default function Carousel() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="relative w-full overflow-hidden rounded-card">
-      <div className="relative h-96 md:h-[550px]">
+    <div className="relative w-full">
+      <div className="absolute -inset-10 bg-accent/15 blur-[100px] rounded-full pointer-events-none" aria-hidden="true" />
+      <div className="carousel-fade relative h-96 md:h-[550px]">
         {images.map((num, idx) => (
           <div key={num} className={`absolute inset-0 transition-opacity duration-700 ease-out ${idx === current ? 'opacity-100' : 'opacity-0'}`}>
             <img src={`/multimedia/${num}.png`} alt="slide" className="w-full h-full object-cover" />
