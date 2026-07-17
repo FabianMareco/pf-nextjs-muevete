@@ -38,7 +38,7 @@ export default function ProductCard({ id, name, price, pictureUrl, subcategory, 
             <p className="text-center text-sm text-muted">Talles: S, M, L, XL</p>
           )}
           {subcategory === 'zapatillas' && (
-            <p className="text-center text-sm text-muted">Talles: 34–43</p>
+            <p className="text-center text-sm text-muted">Talles: 34-43</p>
           )}
  
           {/* Selector de color */}

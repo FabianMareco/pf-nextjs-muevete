@@ -25,7 +25,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: 'MUEVETE — El movimiento, con actitud',
+  title: 'MUEVETE - El movimiento, con actitud',
   description: 'Clases de danza, yoga y nutrición en vivo y grabadas, más merchandising oficial. Movete a tu ritmo.',
 };
 

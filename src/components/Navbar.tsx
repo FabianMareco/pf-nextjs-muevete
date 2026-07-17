@@ -10,6 +10,7 @@ const navLinks = [
   { name: 'Nosotros', href: '/nosotros' },
   { name: 'Clases', href: '/clases' },
   { name: 'Merchandising', href: '/merchandising' },
+  { name: 'Contactanos', href: '/contactanos' },
 ];
 
 export default function Navbar() {
@@ -30,7 +31,7 @@ export default function Navbar() {
           <span className="logo-text">MUEVETE</span>
         </Link>
 
-        <ul className="hidden lg:flex items-center gap-7">
+        <ul className="hidden lg:flex items-center gap-5 xl:gap-7">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link href={link.href} className="text-sm font-semibold text-paper/75 hover:text-paper transition-colors">
