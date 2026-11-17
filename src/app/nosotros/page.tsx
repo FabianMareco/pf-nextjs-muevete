@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default function NosotrosPage() {
-  redirect('/');
+export default function Page() {
+  redirect('/#nosotros');
 }

@@ -3,20 +3,25 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    background-color: #F7F5F2;
-    background-image: url('/multimedia/bgmuevete.png');
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    min-height: 100vh;
+  :root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   }
 
-  @media (max-width: 768px) {
-    body {
-      background-attachment: scroll;
+  html {
+    scroll-padding-top: 88px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
     }
+  }
+
+  body {
+    background-color: #F7F5F2;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4 {
@@ -25,18 +30,11 @@
     letter-spacing: -0.02em;
     line-height: 1.05;
     color: #14110F;
+    text-wrap: balance;
   }
 
-  h2 {
-    @apply text-3xl md:text-4xl mb-6;
-  }
-
-  h3 {
-    @apply text-2xl md:text-3xl mb-5;
-  }
-
-  h4 {
-    @apply text-xl md:text-2xl mb-4;
+  p {
+    text-wrap: pretty;
   }
 
   ::selection {
@@ -46,13 +44,14 @@
 
   *:focus-visible {
     outline: 2px solid #FF2D55;
-    outline-offset: 2px;
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
 @layer components {
   .logo-container {
-    @apply flex items-center gap-2;
+    @apply flex items-center gap-2.5;
   }
 
   .logo-image {
@@ -62,39 +61,63 @@
   .logo-text {
     font-family: var(--font-display), sans-serif;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     @apply text-paper text-xl md:text-2xl;
     line-height: 1;
   }
 
+  .section-title {
+    @apply font-display font-extrabold text-ink text-[clamp(2.25rem,5vw,4rem)] leading-[1] tracking-[-0.04em];
+  }
+
+  /* Botones: una sola familia, radio 10px, feedback al presionar */
+  .btn-primary,
+  .btn-accent,
+  .btn-danger,
+  .btn-outline,
+  .btn-ghost-dark {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap font-bold py-3 px-6 rounded-control;
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease;
+  }
+
+  .btn-lg {
+    @apply py-3.5 px-7 text-base;
+  }
+
   .btn-primary {
-    @apply bg-ink hover:bg-surface text-paper font-bold py-2.5 px-5 rounded-control transition-transform duration-150;
-    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    @apply bg-ink text-paper hover:bg-surface;
   }
 
   .btn-accent {
-    @apply bg-accent hover:bg-accent-deep text-paper font-bold py-2.5 px-5 rounded-control transition-transform duration-150;
-    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    @apply bg-accent text-paper hover:bg-accent-deep;
   }
 
   .btn-danger {
-    @apply bg-danger hover:bg-danger-dark text-paper font-bold py-2.5 px-5 rounded-control transition-transform duration-150;
-    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    @apply bg-danger text-paper hover:bg-danger-dark;
   }
 
   .btn-outline {
-    @apply border-2 border-ink text-ink hover:bg-ink hover:text-paper font-bold py-2.5 px-5 rounded-control transition;
+    @apply border-2 border-ink text-ink hover:bg-ink hover:text-paper;
+  }
+
+  .btn-ghost-dark {
+    @apply border-2 border-paper/25 text-paper hover:border-paper;
   }
 
   .btn-primary:active,
   .btn-accent:active,
   .btn-danger:active,
-  .btn-outline:active {
-    @apply scale-[0.97];
+  .btn-outline:active,
+  .btn-ghost-dark:active {
+    transform: scale(0.97);
   }
 
   .card {
-    @apply bg-white rounded-card border border-neutral shadow-sm;
+    @apply bg-white rounded-card border border-ink/10;
   }
 
   .card-dark {
@@ -102,11 +125,11 @@
   }
 
   .input {
-    @apply w-full p-2.5 rounded-control bg-white border border-neutral text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent;
+    @apply w-full px-4 py-3 rounded-control bg-paper border border-ink/15 text-ink placeholder:text-muted transition-colors focus:outline-none focus:border-ink focus:ring-2 focus:ring-accent/30;
   }
 
   .texto-contenido {
-    @apply bg-neutral text-ink text-justify text-base md:text-lg p-6 rounded-card mx-5 leading-relaxed;
+    @apply text-ink text-base md:text-lg leading-relaxed max-w-[65ch];
   }
 
   .product-title {
@@ -117,48 +140,78 @@
     @apply text-ink font-bold text-center;
   }
 
-  @keyframes hero-in {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
+  .contact-icon {
+    @apply grid place-items-center w-10 h-10 rounded-full bg-accent/10 text-accent-deep;
   }
 
-  .hero-in {
+  .link-underline {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+    transition: background-size 250ms var(--ease-out);
+  }
+  .link-underline:hover {
+    background-size: 100% 1.5px;
+  }
+
+  /* Bento */
+  .bento-cell {
+    @apply relative flex flex-col overflow-hidden rounded-card isolate;
+  }
+  .bento-cell > .bento-img {
+    z-index: -1;
+  }
+  .bento-cell > .absolute:not(.bento-img) {
+    z-index: -1;
+  }
+  .bento-img {
+    transition: transform 700ms var(--ease-out);
+  }
+
+  /* Producto */
+  .product-img {
+    transition: transform 500ms var(--ease-out);
+  }
+  .product-cta {
     opacity: 0;
-    animation: hero-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: translateY(8px);
+    transition: opacity 200ms ease, transform 250ms var(--ease-out);
+  }
+  @media (hover: none) {
+    .product-cta { display: none; }
   }
 
-  .tilt-card {
-    transform-style: preserve-3d;
-    will-change: transform;
-    transition: transform 120ms ease-out, box-shadow 200ms ease;
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .bento-img { transform: scale(1.04); }
+    .product-card:hover .product-img { transform: scale(1.05); }
+    .product-card:hover .product-cta,
+    .product-card:focus-within .product-cta { opacity: 1; transform: translateY(0); }
   }
+
+  .footer-wordmark {
+    font-size: clamp(4rem, 19vw, 17rem);
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    white-space: nowrap;
+  }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
 
   @keyframes marquee-scroll {
     to { transform: translateX(-50%); }
   }
-
   .marquee-track {
-    animation: marquee-scroll 22s linear infinite;
+    animation: marquee-scroll 32s linear infinite;
   }
 
-  .carousel-fade {
-    mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 68%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 68%, transparent 100%);
-  }
+  /* Modal */
+  @keyframes modal-backdrop-in { from { opacity: 0; } }
+  @keyframes modal-in { from { opacity: 0; transform: translateY(12px) scale(0.97); } }
+  .modal-backdrop { animation: modal-backdrop-in 200ms ease-out; }
+  .modal-panel { animation: modal-in 280ms var(--ease-out); }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-in {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-
-    .tilt-card {
-      transition: none;
-    }
-
-    .marquee-track {
-      animation: none;
-    }
+    .marquee-track { animation: none; }
+    .modal-panel { animation: modal-backdrop-in 200ms ease-out; }
+    .bento-img, .product-img { transition: none; }
   }
 }
