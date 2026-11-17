@@ -7,7 +7,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from 'react-hot-toast';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'aos/dist/aos.css';
 import './globals.css';
 
 const bricolage = Bricolage_Grotesque({
@@ -32,7 +31,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`${bricolage.variable} ${manrope.variable}`}>
-      <body className="flex flex-col min-h-screen bg-paper text-ink font-sans">
+      <body className="flex flex-col min-h-screen bg-paper text-ink font-sans antialiased">
         <AuthProvider>
           <CartProvider>
             <Navbar />

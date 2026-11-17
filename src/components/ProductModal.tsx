@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useCart } from '@/hooks/useCart';
 import ConfirmDialog from '@/components/ConfirmDialog';
@@ -47,81 +47,79 @@ export default function ProductModal({ product, onClose }: { product: any; onClo
     setAddedDialog(true);
   };
  
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
+  }, [onClose]);
+
+  const chip = (on: boolean) =>
+    `min-w-11 px-3 py-2 text-sm rounded-control border font-semibold transition-colors active:scale-[0.96] ${on ? 'bg-ink text-paper border-ink' : 'bg-white border-ink/15 text-ink hover:border-ink/40'}`;
+
   return (
     <>
-      <div className="fixed inset-0 bg-ink/70 flex items-center justify-center z-50 p-4">
-        <div className="card max-w-lg w-full max-h-[90vh] overflow-y-auto" style={{ transformOrigin: 'center' }}>
-          <div className="p-6">
-            <div className="flex justify-end">
-              <button onClick={onClose} aria-label="Cerrar" className="text-muted hover:text-ink text-xl transition active:scale-90"><i className="fas fa-xmark" aria-hidden="true" /></button>
-            </div>
- 
-            <img
-              src={currentImage}
-              alt={product.name}
-              className="w-full h-64 object-contain mb-4 transition-all duration-300"
-            />
-            <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
-            <p className="text-muted mb-4">{product.description}</p>
-            <p className="text-xl font-bold text-ink mb-4">${product.price.toLocaleString()}</p>
- 
-            {/* Talles */}
+      <div className="modal-backdrop fixed inset-0 z-[60] bg-ink/60 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4" onClick={onClose}>
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={product.name}
+          onClick={(e) => e.stopPropagation()}
+          className="modal-panel relative w-full sm:max-w-3xl max-h-[92dvh] overflow-y-auto bg-paper rounded-t-card sm:rounded-card grid md:grid-cols-2"
+        >
+          <button onClick={onClose} aria-label="Cerrar" className="absolute right-3 top-3 z-10 grid place-items-center w-10 h-10 rounded-full bg-white/90 text-ink hover:bg-white transition active:scale-90">
+            <i className="fas fa-xmark text-lg" aria-hidden="true" />
+          </button>
+
+          <div className="bg-white aspect-square md:aspect-auto md:min-h-full flex items-center justify-center p-8">
+            <img src={currentImage} alt={product.name} className="max-h-72 md:max-h-[420px] w-full object-contain" />
+          </div>
+
+          <div className="p-6 md:p-8 flex flex-col">
+            <h2 className="font-display font-extrabold text-3xl tracking-[-0.03em] capitalize">{String(product.name).toLowerCase()}</h2>
+            <p className="mt-2 text-2xl font-bold text-ink">${product.price.toLocaleString('es-AR')}</p>
+            {product.description && <p className="mt-3 text-muted leading-relaxed">{product.description}</p>}
+
             {sizes.length > 0 && (
-              <div className="mb-4">
-                <label className="block font-bold mb-2">Talle:</label>
+              <div className="mt-6">
+                <p className="text-sm font-bold mb-2">Talle</p>
                 <div className="flex flex-wrap gap-2">
                   {sizes.map(size => (
-                    <button
-                      key={size}
-                      onClick={() => setSelectedSize(size)}
-                      className={`px-3 py-1 border rounded-control transition active:scale-[0.96] ${selectedSize === size ? 'bg-ink text-paper border-ink' : 'bg-neutral border-neutral text-ink hover:border-ink/30'}`}
-                    >
-                      {size}
-                    </button>
+                    <button key={size} onClick={() => setSelectedSize(size)} aria-pressed={selectedSize === size} className={chip(selectedSize === size)}>{size}</button>
                   ))}
                 </div>
               </div>
             )}
- 
-            {/* Colores dinámicos */}
+
             {product.colors && product.colors.length > 0 && (
-              <div className="mb-4">
-                <label className="block font-bold mb-2">Color:</label>
+              <div className="mt-6">
+                <p className="text-sm font-bold mb-2">Color</p>
                 <div className="flex flex-wrap gap-2">
                   {product.colors.map((color: any) => (
-                    <button
-                      key={color.name}
-                      onClick={() => setSelectedColor(color.name)}
-                      className={`px-3 py-1 border-2 rounded-control transition font-semibold active:scale-[0.96] ${
-                        selectedColor === color.name
-                          ? 'border-accent bg-accent/10 text-accent-deep'
-                          : 'border-neutral bg-neutral text-muted hover:border-ink/30'
-                      }`}
-                    >
-                      {color.name}
-                    </button>
+                    <button key={color.name} onClick={() => setSelectedColor(color.name)} aria-pressed={selectedColor === color.name} className={chip(selectedColor === color.name)}>{color.name}</button>
                   ))}
                 </div>
               </div>
             )}
- 
-            {/* Cantidad */}
-            <div className="mb-4">
-              <label className="block font-bold mb-2">Cantidad:</label>
-              <div className="flex items-center gap-3">
-                <button onClick={decrement} aria-label="Restar" className="bg-neutral hover:bg-ink/10 w-9 h-9 rounded-full font-bold text-ink transition active:scale-90 flex items-center justify-center">−</button>
-                <span className="text-xl font-bold">{quantity}</span>
-                <button onClick={increment} aria-label="Sumar" className="bg-neutral hover:bg-ink/10 w-9 h-9 rounded-full font-bold text-ink transition active:scale-90 flex items-center justify-center">+</button>
+
+            <div className="mt-6">
+              <p className="text-sm font-bold mb-2">Cantidad</p>
+              <div className="inline-flex items-center rounded-control border border-ink/15 bg-white">
+                <button onClick={decrement} aria-label="Restar" className="w-11 h-11 grid place-items-center text-ink hover:bg-ink/5 transition active:scale-90"><i className="fas fa-minus text-xs" aria-hidden="true" /></button>
+                <span className="w-10 text-center font-bold tabular-nums">{quantity}</span>
+                <button onClick={increment} aria-label="Sumar" className="w-11 h-11 grid place-items-center text-ink hover:bg-ink/5 transition active:scale-90"><i className="fas fa-plus text-xs" aria-hidden="true" /></button>
               </div>
             </div>
- 
-            <button onClick={handleAddToCart} className="w-full btn-accent py-2.5">
+
+            <button onClick={handleAddToCart} className="btn-accent btn-lg w-full mt-8 md:mt-auto">
+              <i className="fas fa-cart-shopping" aria-hidden="true" />
               Agregar al carrito
             </button>
           </div>
         </div>
       </div>
- 
+
       {/* Dialog: producto agregado */}
       <ConfirmDialog
         isOpen={addedDialog}

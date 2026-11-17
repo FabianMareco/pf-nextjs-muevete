@@ -95,7 +95,7 @@ export default function CartPage() {
       <div className="container mx-auto px-4 py-16 text-center">
         <i className="fas fa-cart-shopping text-4xl text-muted mb-4" aria-hidden="true" />
         <h1 className="text-3xl font-bold text-ink mb-4">Carrito vacío</h1>
-        <Link href="/merchandising" className="btn-primary inline-block">
+        <Link href="/#tienda" className="btn-primary inline-block">
           Ir a comprar
         </Link>
       </div>

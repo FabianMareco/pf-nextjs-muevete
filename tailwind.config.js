@@ -12,6 +12,7 @@ module.exports = {
         'surface': '#1F1B17',
         'paper': '#F7F5F2',
         'neutral': '#E7E5E2',
+        'sand': '#EEEBE6',
         'muted': '#6B6459',
         'accent': '#FF2D55',
         'accent-deep': '#C4123B',
